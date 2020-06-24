@@ -1,0 +1,8 @@
+{% extends "rekrutacja/base.html" %}
+{% block content %}
+    <form method="POST" action="">
+        {% csrf_token %}
+
+    <button type="submit" class="btn btn-outline-dark">Wyślij</button>
+    </form>
+{% endblock %}
