@@ -1,6 +1,7 @@
 {% extends "rekrutacja/base.html" %}
 {% block content %}
     <h2>Proszę wypełnić formularz</h2>
+    <br>
     <form method="POST" action="">
         {% csrf_token %}
             {{ form.as_p }}

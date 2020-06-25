@@ -16,7 +16,7 @@ class UserRegisterForm(UserCreationForm):
 class FormUczen(forms.ModelForm):
     class Meta:
         model = FormUcznia
-        fields = ['imie', 'imie2', 'nazwisko']
+        fields = ['imie', 'imie2', 'nazwisko', 'ukonczona_szkola', 'rok_ukonczenia']
 
     imie = forms.CharField(label='Imię:', max_length=80)
     imie2 = forms.CharField(label='Drugie imię:', max_length=80, required=False)
@@ -24,18 +24,18 @@ class FormUczen(forms.ModelForm):
 
     # img = forms.ImageField()
 
-    # choices_szkola = [
-    #     ('LO', 'Liceum Ogólnokształcące'),
-    #     ('ZSZ', 'Zasadnicza Szkoła Zawodowa'),
-    #     ('BS1', 'Branżowa Szkoła I stopnia'),
-    #     ('SP', 'Szkoła Podstawowa')
-    #            ]
-    # ukonczona_szkola = forms.ChoiceField(label='Ostatnio ukończona szkoła:', choices=choices_szkola)
-    # choices_y = []
-    # for y in range(datetime.datetime.now().year - 100, datetime.datetime.now().year):
-    #     choices_y.append((y, y))     # Tuple!!
-    # rok_ukonczenia = forms.IntegerField(label='Rok jej ukończenia:', max_length=4, choices=choices_y, default=datetime.datetime.now().year)
-    #
+    choices_szkola = [
+        ('LO', 'Liceum Ogólnokształcące'),
+        ('ZSZ', 'Zasadnicza Szkoła Zawodowa'),
+        ('BS1', 'Branżowa Szkoła I stopnia'),
+        ('SP', 'Szkoła Podstawowa')
+               ]
+    ukonczona_szkola = forms.ChoiceField(label='Ostatnio ukończona szkoła:', choices=choices_szkola)
+    choices_y = []
+    for y in range(datetime.datetime.now().year - 100, datetime.datetime.now().year + 1):
+        choices_y.append((y, y))     # Tuple!!
+    rok_ukonczenia = forms.ChoiceField(label='Rok jej ukończenia:', choices=choices_y, initial=choices_y[-1][1])
+
     # # Kwestionariusz osobowy.
     # pesel = forms.IntegerField(label='Pesel:', max_length=9)
     # miejsce_urodzenia = forms.CharField(label='Miejsce urodzenia:', max_length=200)

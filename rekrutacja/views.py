@@ -63,7 +63,7 @@ def formuczen(request):
             form = FormUczen(request.POST)
             if form.is_valid():
                 new_f = form.save(commit=False)
-                new_f.uzytkownik = request.user
+                new_f.uzytkownik = request.user     # Makes the logged user the owner of the form.
                 new_f.save()
                 messages.success(request, 'Dziękujemy za wysłanie formularza.')
                 return redirect('home')
