@@ -16,11 +16,14 @@ class UserRegisterForm(UserCreationForm):
 class FormUczen(forms.ModelForm):
     class Meta:
         model = FormUcznia
-        fields = ['imie', 'imie2', 'nazwisko', 'ukonczona_szkola', 'rok_ukonczenia']
+        fields = [
+            'imie', 'imie2', 'nazwisko', 'ukonczona_szkola', 'rok_ukonczenia',
+            'pesel', 'miejsce_urodzenia', 'wojewodztwo'
+                  ]
 
-    imie = forms.CharField(label='Imię:', max_length=80)
-    imie2 = forms.CharField(label='Drugie imię:', max_length=80, required=False)
-    nazwisko = forms.CharField(label='Nazwisko:', max_length=80)
+    imie = forms.CharField(label='Imię:', min_length=2, max_length=80)
+    imie2 = forms.CharField(label='Drugie imię:', min_length=2, max_length=80, required=False)
+    nazwisko = forms.CharField(label='Nazwisko:', min_length=2, max_length=80)
 
     # img = forms.ImageField()
 
@@ -36,37 +39,37 @@ class FormUczen(forms.ModelForm):
         choices_y.append((y, y))     # Tuple!!
     rok_ukonczenia = forms.ChoiceField(label='Rok jej ukończenia:', choices=choices_y, initial=choices_y[-1][1])
 
-    # # Kwestionariusz osobowy.
-    # pesel = forms.IntegerField(label='Pesel:', max_length=9)
-    # miejsce_urodzenia = forms.CharField(label='Miejsce urodzenia:', max_length=200)
-    # wojewodztwa = [
-    #     ('DS', 'Dolnośląskie'),
-    #     ('KP', 'Kujawsko-Pomorskie'),
-    #     ('LB', 'Lubelskie'),
-    #     ('LS', 'Lubiskie'),
-    #     ('LD', 'Łódzkie'),
-    #     ('MP', 'Małopolskie'),
-    #     ('MZ', 'Mazowieckie'),
-    #     ('OP', 'Opolskie'),
-    #     ('PK', 'Podkarpackie'),
-    #     ('PL', 'Podlaskie'),
-    #     ('PM', 'Pomorskie'),
-    #     ('SL', 'Śląskie'),
-    #     ('SK', 'Świętokrzyskie'),
-    #     ('WM', 'Warmińsko-Mazurskie'),
-    #     ('WP', 'Wielkopolskie'),
-    #     ('ZP', 'Zachodniopomorskie'),
-    # ]
-    # wojewodztwo = forms.ChoiceField(label='Województwo:', choices=wojewodztwa)
-    #
-    # # Adres zamieszkania.
-    # kod_pocztowy = forms.CharField(label="Kod pocztowy:", max_length=6)
-    # poczta = forms.CharField(label="Poczta:", max_length=100)
-    # miejscowosc = forms.CharField(label='Miejscowość:', max_length=100)
-    # wojewodztwo_ur = forms.ChoiceField(label="Województwo:", choices=wojewodztwa)
-    # ulica = forms.CharField(label='Ulica:', max_length=100)
-    # nr_domu = forms.CharField(label='"Numer domu:', max_length=4)
-    # nr_lokalu = forms.IntegerField(label='Numer lokalu:', max_length=3, required=False)
+    # Kwestionariusz osobowy.
+    pesel = forms.IntegerField(label='Pesel:', min_value=30000000000, max_value=99999999999)
+    miejsce_urodzenia = forms.CharField(label='Miejsce urodzenia:', min_length=3, max_length=200)
+    wojewodztwa = [
+        ('DS', 'Dolnośląskie'),
+        ('KP', 'Kujawsko-Pomorskie'),
+        ('LB', 'Lubelskie'),
+        ('LS', 'Lubiskie'),
+        ('LD', 'Łódzkie'),
+        ('MP', 'Małopolskie'),
+        ('MZ', 'Mazowieckie'),
+        ('OP', 'Opolskie'),
+        ('PK', 'Podkarpackie'),
+        ('PL', 'Podlaskie'),
+        ('PM', 'Pomorskie'),
+        ('SL', 'Śląskie'),
+        ('SK', 'Świętokrzyskie'),
+        ('WM', 'Warmińsko-Mazurskie'),
+        ('WP', 'Wielkopolskie'),
+        ('ZP', 'Zachodniopomorskie'),
+    ]
+    wojewodztwo = forms.ChoiceField(label='Województwo:', choices=wojewodztwa)
+
+    # Adres zamieszkania.
+    kod_pocztowy = forms.CharField(label="Kod pocztowy (w formacie 00-000):", min_length=6, max_length=6)
+    poczta = forms.CharField(label="Poczta:", max_length=100)
+    miejscowosc = forms.CharField(label='Miejscowość:', max_length=100)
+    wojewodztwo_ur = forms.ChoiceField(label="Województwo:", choices=wojewodztwa)
+    ulica = forms.CharField(label='Ulica:', max_length=100)
+    nr_domu = forms.CharField(label='"Numer domu:', max_length=4)
+    nr_lokalu = forms.IntegerField(label='Numer lokalu:', max_value=999, required=False)
     # email = forms.EmailField(label='Adres email:')
     # telefon = forms.IntegerField(label='Numer telefonu:', max_length=11)
     #
