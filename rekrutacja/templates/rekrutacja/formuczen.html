@@ -1,8 +1,9 @@
 {% extends "rekrutacja/base.html" %}
 {% block content %}
+    <h2>Proszę wypełnić formularz</h2>
     <form method="POST" action="">
         {% csrf_token %}
-
+            {{ form.as_p }}
     <button type="submit" class="btn btn-outline-dark">Wyślij</button>
     </form>
 {% endblock %}

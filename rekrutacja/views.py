@@ -55,8 +55,18 @@ def aplikuj(request):
 @login_required
 def formuczen(request):
     title = 'Uczniowie'
-    form = FormUczen()
     if request.method == 'GET':
-        return render(request, 'rekrutacja/formuczen.html', {'title': title})
+        form = FormUczen()
+        return render(request, 'rekrutacja/formuczen.html', {'title': title, 'form': form})
     else:
-        pass
+        try:
+            form = FormUczen(request.POST)
+            if form.is_valid():
+                new_f = form.save(commit=False)
+                new_f.uzytkownik = request.user
+                new_f.save()
+                messages.success(request, 'Dziękujemy za wysłanie formularza.')
+                return redirect('home')
+        except ValueError:
+            messages.error(request, 'Błędnie wprowadzone dane.')
+            return render(request, 'rekrutacja/formuczen.html', {'title': title, 'form': FormUczen(request.POST)})

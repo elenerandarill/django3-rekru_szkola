@@ -2,7 +2,7 @@
 {% block content %}
     <h4>Wybierz szkołę lub kurs:</h4>
     <br>
-    <button class="btn btn-outline-dark" href="#">Dla uczniów</button>
-    <button class="btn btn-outline-dark" href="#">Dla dorosłych</button>
-    <button class="btn btn-outline-dark" href="#">Kurs Zawodowy</button>
+    <a href="{% url 'formuczen' %}"><button class="btn btn-outline-dark">Dla uczniów</button></a>
+    <a href="#"><button class="btn btn-outline-dark">Dla dorosłych</button></a>
+    <a href="#"><button class="btn btn-outline-dark">Kurs Zawodowy</button></a>
 {% endblock %}
