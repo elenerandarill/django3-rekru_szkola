@@ -24,7 +24,15 @@ class FormUcznia(models.Model):
     ulica = models.CharField(max_length=100)
     nr_domu = models.CharField(max_length=4)
     nr_lokalu = models.IntegerField(null=True)
+    email = models.EmailField()
+    telefon = models.CharField(max_length=20)
 
+    matka_imie = models.CharField(max_length=80)
+    matka_nazwisko = models.CharField(max_length=80)
+    czy_matka = models.BooleanField()
+    ojciec_imie = models.CharField(max_length=80)
+    ojciec_nazwisko = models.CharField(max_length=80)
+    czy_ojciec = models.BooleanField()
 
     def __str__(self):
         return f'Uczeń/Uczennica {self.nazwisko} {self.imie}'

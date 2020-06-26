@@ -18,7 +18,10 @@ class FormUczen(forms.ModelForm):
         model = FormUcznia
         fields = [
             'imie', 'imie2', 'nazwisko', 'ukonczona_szkola', 'rok_ukonczenia',
-            'pesel', 'miejsce_urodzenia', 'wojewodztwo'
+            'pesel', 'miejsce_urodzenia', 'wojewodztwo', 'kod_pocztowy', 'poczta',
+            'miejscowosc', 'wojewodztwo_ur', 'ulica', 'nr_domu', 'nr_lokalu', 'email',
+            'telefon', 'matka_imie', 'matka_nazwisko', 'czy_matka', 'ojciec_imie',
+            'ojciec_nazwisko', 'czy_ojciec',
                   ]
 
     imie = forms.CharField(label='Imię:', min_length=2, max_length=80)
@@ -40,7 +43,7 @@ class FormUczen(forms.ModelForm):
     rok_ukonczenia = forms.ChoiceField(label='Rok jej ukończenia:', choices=choices_y, initial=choices_y[-1][1])
 
     # Kwestionariusz osobowy.
-    pesel = forms.IntegerField(label='Pesel:', min_value=30000000000, max_value=99999999999)
+    pesel = forms.IntegerField(label='Pesel:', min_value=10000000000, max_value=99999999999)    # Todo jakies
     miejsce_urodzenia = forms.CharField(label='Miejsce urodzenia:', min_length=3, max_length=200)
     wojewodztwa = [
         ('DS', 'Dolnośląskie'),
@@ -68,18 +71,18 @@ class FormUczen(forms.ModelForm):
     miejscowosc = forms.CharField(label='Miejscowość:', max_length=100)
     wojewodztwo_ur = forms.ChoiceField(label="Województwo:", choices=wojewodztwa)
     ulica = forms.CharField(label='Ulica:', max_length=100)
-    nr_domu = forms.CharField(label='"Numer domu:', max_length=4)
+    nr_domu = forms.CharField(label='Numer domu:', max_length=4)
     nr_lokalu = forms.IntegerField(label='Numer lokalu:', max_value=999, required=False)
-    # email = forms.EmailField(label='Adres email:')
-    # telefon = forms.IntegerField(label='Numer telefonu:', max_length=11)
-    #
-    # # Opiekunowie.
-    # matka_imie = forms.CharField(label='Imię matki/prawnej opiekunki:', max_length=80)
-    # matka_nazwisko = forms.CharField(label='Nazwisko matki/prawnej opiekunki:', max_length=80)
-    # czy_matka = forms.BooleanField(label='Zaznaczyć, jeśli chodzi o rodzica, a nie o opiekuna.', required=True)
-    # ojciec_imie = forms.CharField(label='Imię ojca/prawnego opiekuna:', max_length=80)
-    # ojciec_nazwisko = forms.CharField(label='Nazwisko ojca/prawnego opiekuna:', max_length=80)
-    # czy_ojciec = forms.BooleanField(label='Zaznaczyć, jeśli chodzi o rodzica, a nie o opiekuna.', required=True)
+    email = forms.EmailField(label='Adres email:')
+    telefon = forms.CharField(label='Numer telefonu:', max_length=20)
+
+    # Opiekunowie.
+    matka_imie = forms.CharField(label='Imię matki/prawnej opiekunki:', max_length=80)
+    matka_nazwisko = forms.CharField(label='Nazwisko matki/prawnej opiekunki:', max_length=80)
+    czy_matka = forms.BooleanField(label='Zaznaczyć, jeśli chodzi o rodzica, a nie o opiekuna.', required=False)
+    ojciec_imie = forms.CharField(label='Imię ojca/prawnego opiekuna:', max_length=80)
+    ojciec_nazwisko = forms.CharField(label='Nazwisko ojca/prawnego opiekuna:', max_length=80)
+    czy_ojciec = forms.BooleanField(label='Zaznaczyć, jeśli chodzi o rodzica, a nie o opiekuna.', required=False)
 
 
 
