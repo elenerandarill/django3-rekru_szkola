@@ -2,7 +2,21 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import FormUcznia
+from django.core.exceptions import ValidationError
 import datetime
+
+
+def pesel_valid(value):
+    numery = []
+    for i in value:
+        numery.append(int(i))
+    suma = 9 * numery[0] + 7 * numery[1] + 3 * numery[2] \
+           + 1 * numery[3] + 9 * numery[4] + 7 * numery[5] \
+           + 3 * numery[6] + 1 * numery[7] + 9 * numery[8] + 7 * numery[9]
+    kontrolna = numery[-1]
+    if suma % 10 != kontrolna:
+        # print('XXXXXXXXXXXXXXXXXXXpesel niepoprawny')
+        raise ValidationError(f'Wprowadzony pesel ({value}) jest niepoprawny')
 
 
 class UserRegisterForm(UserCreationForm):
@@ -43,7 +57,8 @@ class FormUczen(forms.ModelForm):
     rok_ukonczenia = forms.ChoiceField(label='Rok jej ukończenia:', choices=choices_y, initial=choices_y[-1][1])
 
     # Kwestionariusz osobowy.
-    pesel = forms.IntegerField(label='Pesel:', min_value=10000000000, max_value=99999999999)    # Todo jakies
+    pesel = forms.CharField(label='Pesel:', validators=[pesel_valid])    # Todo jakies
+    #pesel = forms.CharField(label='Pesel:')  # Todo jakies
     miejsce_urodzenia = forms.CharField(label='Miejsce urodzenia:', min_length=3, max_length=200)
     wojewodztwa = [
         ('DS', 'Dolnośląskie'),
@@ -83,6 +98,5 @@ class FormUczen(forms.ModelForm):
     ojciec_imie = forms.CharField(label='Imię ojca/prawnego opiekuna:', max_length=80)
     ojciec_nazwisko = forms.CharField(label='Nazwisko ojca/prawnego opiekuna:', max_length=80)
     czy_ojciec = forms.BooleanField(label='Zaznaczyć, jeśli chodzi o rodzica, a nie o opiekuna.', required=False)
-
 
 

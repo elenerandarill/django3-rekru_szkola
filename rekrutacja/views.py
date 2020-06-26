@@ -1,7 +1,10 @@
+import sys
+
 from django.contrib import messages
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import AuthenticationForm
+from django.core.exceptions import ValidationError
 from django.shortcuts import render, redirect
 from .forms import UserRegisterForm, FormUczen
 
@@ -59,14 +62,13 @@ def formuczen(request):
         form = FormUczen()
         return render(request, 'rekrutacja/formuczen.html', {'title': title, 'form': form})
     else:
-        try:
-            form = FormUczen(request.POST)
-            if form.is_valid():
-                new_f = form.save(commit=False)
-                new_f.uzytkownik = request.user     # Makes the logged user the owner of the form.
-                new_f.save()
-                messages.success(request, 'Dziękujemy za wysłanie formularza.')
-                return redirect('home')
-        except ValueError:
+        form = FormUczen(request.POST)
+        if form.is_valid():
+            new_f = form.save(commit=False)
+            new_f.uzytkownik = request.user     # Makes the logged user the owner of the form.
+            new_f.save()
+            messages.success(request, 'Dziękujemy za wysłanie formularza.')
+            return redirect('home')
+        else:
             messages.error(request, 'Błędnie wprowadzone dane.')
             return render(request, 'rekrutacja/formuczen.html', {'title': title, 'form': FormUczen(request.POST)})
