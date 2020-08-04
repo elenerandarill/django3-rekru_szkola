@@ -57,8 +57,8 @@ class FormUczen(forms.ModelForm):
     rok_ukonczenia = forms.ChoiceField(label='Rok jej ukończenia:', choices=choices_y, initial=choices_y[-1][1])
 
     # Kwestionariusz osobowy.
-    pesel = forms.CharField(label='Pesel:', validators=[pesel_valid])    # Todo jakies
-    #pesel = forms.CharField(label='Pesel:')  # Todo jakies
+    pesel = forms.CharField(label='Pesel:', validators=[pesel_valid])
+    
     miejsce_urodzenia = forms.CharField(label='Miejsce urodzenia:', min_length=3, max_length=200)
     wojewodztwa = [
         ('DS', 'Dolnośląskie'),
